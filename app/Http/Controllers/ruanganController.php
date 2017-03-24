@@ -12,17 +12,43 @@ class ruanganController extends Controller
 {
     public function awal()
 	{
-		return "Link ruangan";
+		return view('ruangan.awal',['data'=>ruangan::all()]);
 	}
 	public function tambah()
 	{
-		return $this->simpan();
+		return view('ruangan.tambah');
 	}
-	public function simpan()
+	public function simpan(Request $input)
 	{
 		$ruangan = new ruangan();
-		$ruangan->title = "R401";
+		$ruangan->title = $input->title;
 		$ruangan->save();
-		return "Data Ruangan Dengan Title {$ruangan->title} Telah Disimpan";
+		$informasi=$ruangan->save() ? 'Berhasil simpan data' : 'Gagal Simpan data';
+		return redirect('ruangan')->with(['informasi'=>$informasi]);
+	}
+	public function edit($id)
+	{
+		$ruangan=ruangan::find($id);
+		return view('ruangan.edit')->with(array('ruangan'=>$ruangan));
+	}
+	public function lihat($id)
+	{
+		$ruangan=ruangan::find($id);
+		return view('ruangan.lihat')->with(array('ruangan'=>$ruangan));
+	}
+	public function update($id, Request $input)
+	{
+		$ruangan=ruangan::find($id);
+		$ruangan = new ruangan();
+		$ruangan->title = $input->title;
+		$ruangan->save();
+		$informasi=$ruangan->save() ? 'Berhasil update data' : 'Gagal update data';
+		return redirect('ruangan')->with(['informasi'=>$informasi]);
+	}
+	public function hapus($id)
+	{
+		$ruangan=ruangan::find($id);
+		$informasi=$ruangan->delete() ? 'Berhasil Delete' : 'Gagal Delete';
+		return redirect('ruangan')->with(['informasi'=>$informasi]);
 	}
 }

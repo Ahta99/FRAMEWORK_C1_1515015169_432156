@@ -12,18 +12,45 @@ class matakuliahController extends Controller
 {
     public function awal()
 	{
-		return "Link Matakuliah";
+		return view('matakuliah.awal',['data'=>matakuliah::all()]);
 	}
 	public function tambah()
 	{
-		return $this->simpan();
+		return view('matakuliah.tambah');
 	}
-	public function simpan()
+	public function simpan(Request $input)
 	{
 		$matakuliah = new matakuliah();
-		$matakuliah->title = "Praktikum Framework";
-		$matakuliah->keterangan = "Laravel";
+		$matakuliah->title = $input->title;
+		$matakuliah->keterangan = $input->keterangan;
 		$matakuliah->save();
-		return "Matakuliah {$matakuliah->title} Telah Disimpan";
+		$informasi=$matakuliah->save() ? 'Berhasil simpan data' : 'Gagal Simpan data';
+		return redirect('matakuliah')->with(['informasi'=>$informasi]);
+	}
+	public function edit($id)
+	{
+		$matakuliah=matakuliah::find($id);
+		return view('matakuliah.edit')->with(array('matakuliah'=>$matakuliah));
+	}
+	public function lihat($id)
+	{
+		$matakuliah=matakuliah::find($id);
+		return view('matakuliah.lihat')->with(array('matakuliah'=>$matakuliah));
+	}
+	public function update($id, Request $input)
+	{
+		$matakuliah=matakuliah::find($id);
+		$matakuliah = new matakuliah();
+		$matakuliah->title = $input->title;
+		$matakuliah->keterangan = $input->keterangan;
+		$matakuliah->save();
+		$informasi=$matakuliah->save() ? 'Berhasil update data' : 'Gagal update data';
+		return redirect('matakuliah')->with(['informasi'=>$informasi]);
+	}
+	public function hapus($id)
+	{
+		$matakuliah=matakuliah::find($id);
+		$informasi=$matakuliah->delete() ? 'Berhasil Delete' : 'Gagal Delete';
+		return redirect('matakuliah')->with(['informasi'=>$informasi]);
 	}
 }
