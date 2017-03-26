@@ -38,13 +38,11 @@ class PenggunaController extends Controller
 	}
 	public function update($id, Request $input)
 	{
-		$pengguna=Pengguna::find($id);
-		$pengguna = new Pengguna();
-		$pengguna->username = $input['username'];
-		$pengguna->password = $input['password'];
-		$pengguna->save();
-		
-		return redirect('pengguna');
+		$pengguna = pengguna::find($id);
+		$pengguna->username = $input->username;
+		$pengguna->password = $input->password;
+		$informasi = $pengguna->save() ? 'Berhasil update data' : 'Gagal update data';
+		return redirect('pengguna')->with(['informasi'=>$informasi]);
 	}
 	public function hapus($id)
 	{
