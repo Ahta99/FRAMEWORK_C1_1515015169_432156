@@ -10,20 +10,59 @@ use App\dosen_matakuliah;
 
 class dosen_matakuliahController extends Controller
 {
+    protected $informasi = "Gagal Melakukan Aksi";
+	
     public function awal()
 	{
-		return "Link Cek Dosen";
+		$semuadosmat = dosen_matakuliah::all();
+		return view('dosen_matakuliah.awal', compact('semuadosmat'));
 	}
 	public function tambah()
 	{
-		return $this->simpan();
+		return view('dosen_matakuliah.tambah');
 	}
-	public function simpan()
+	public function simpan(Request $input)
 	{
 		$dosen_matakuliah = new dosen_matakuliah();
-		$dosen_matakuliah->dosen_id = "1";
-		$dosen_matakuliah->matakuliah_id = "1";
+		$dosen_matakuliah->dosen_id = $input->dosen_id;
+		$dosen_matakuliah->matakuliah_id = $input->matakuliah_id;
+		if($dosen_matakuliah->save()){
+			$this->informasi = 'Berhasil simpan data';
+		
+		}
+			
+		return redirect('dosen_matakuliah')->with(['informasi' => $this->informasi]);
+		}
+	
+	public function edit($id){
+		$dosen_matakuliah=dosen_matakuliah::find($id);
+		return view('dosen_matakuliah.edit')->with(array('dosen_matakuliah'=>$dosen_matakuliah));
+	}
+	public function lihat($id){
+		$dosen_matakuliah = dosen_matakuliah::find($id);
+		return view('dosen_matakuliah.lihat')->with(array('dosen_matakuliah'=>$dosen_matakuliah));
+	}
+	public function update($id, Request $input){
+		$dosen_matakuliah = dosen_matakuliah::find($id);
+		$dosen_matakuliah->dosen_id = $input->dosen_id;
+		$dosen_matakuliah->matakuliah_id = $input->matakuliah_id;
 		$dosen_matakuliah->save();
-		return "Data Matakuliah Dosen Dengan ID {$dosen_matakuliah->dosen_id} Telah Disimpan";
+			
+			if($dosen_matakuliah->save()){
+				$this->informasi='Berhasil simpan data';
+			}
+			else{
+				$this->informasi="Berhasil simpan data";
+			}
+		return redirect('dosen_matakuliah')->with(['informasi' => $this->informasi]);
+		}
+	
+	public function hapus($id){
+		$dosen_matakuliah = dosen_matakuliah::find($id);
+			if($dosen_matakuliah->delete()){
+				$this->informasi = 'Berhasil hapus data';
+			}
+		return redirect('dosen_matakuliah')->with(['informasi => $informasi']);
+		
 	}
 }

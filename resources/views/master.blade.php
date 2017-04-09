@@ -42,14 +42,14 @@
 								<ul class="dropdown-menu" aria-labelledby="dlabel">
 									<li><a href="{{url('mahasiswa')}}">Data Mahasiswa</a></li>
 									<li class="divider"></li>
-									<li><a href="{{url('jadwal_matakuliyah')}}">Jadwal Mahasiswa</a></li></ul>
+									<li><a href="{{url('jadwal_matakuliah')}}">Jadwal Mahasiswa</a></li></ul>
 									</li>
 									<li class="dropdown active">
 										<a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Dosen <span class="caret"></span></a>
 										<ul class="dropdown-menu" aria-labelledby="dlabel">
 											<li><a  href="{{url('dosen')}}">Data Dosen</a></li>
 											<li class="divider"></li>
-											<li><a href="{{url('dosen_matakuliyah')}}">Jadwal Dosen Mengajar</a></li></ul>
+											<li><a href="{{url('dosen_matakuliah')}}">Jadwal Dosen Mengajar</a></li></ul>
 											</li>
 											<li class="dropdown active">
 												<a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pengaturan <span class="caret"></span> </a>
